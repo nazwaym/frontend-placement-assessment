@@ -1,0 +1,167 @@
+[
+  {
+    "id": "WF-01",
+    "category": "web-fundamentals",
+    "difficulty": "easy",
+    "question": "Seorang pengguna membuka website melalui browser. Komponen yang bertugas menerjemahkan nama domain seperti example.com menjadi alamat IP adalah...",
+    "options": ["DNS", "CSS", "DOM", "HTML"],
+    "correctAnswer": 0,
+    "learningObjective": "Mengukur pemahaman dasar mengenai cara browser menemukan server melalui domain."
+  },
+  {
+    "id": "WF-02",
+    "category": "web-fundamentals",
+    "difficulty": "medium",
+    "question": "Ketika sebuah halaman web meminta data dari server tanpa harus memuat ulang seluruh halaman, pendekatan yang paling sesuai adalah...",
+    "options": [
+      "Mengubah file HTML secara manual",
+      "Melakukan request menggunakan JavaScript dan memperbarui bagian halaman yang diperlukan",
+      "Menghapus DOM kemudian membuat halaman baru",
+      "Mengubah stylesheet setiap kali data berubah"
+    ],
+    "correctAnswer": 1,
+    "learningObjective": "Mengukur pemahaman konsep komunikasi client-server dan dynamic update pada web."
+  },
+  {
+    "id": "HTML-01",
+    "category": "html",
+    "difficulty": "easy",
+    "question": "Elemen HTML yang paling tepat digunakan untuk menandai navigasi utama sebuah website adalah...",
+    "options": ["<section>", "<nav>", "<div>", "<aside>"],
+    "correctAnswer": 1,
+    "learningObjective": "Mengukur pemahaman semantic HTML."
+  },
+  {
+    "id": "HTML-02",
+    "category": "html",
+    "difficulty": "easy",
+    "question": "Sebuah form memiliki input email. Atribut HTML yang membantu browser melakukan validasi bahwa nilai yang dimasukkan berbentuk email adalah...",
+    "options": ["type=\"email\"", "type=\"text\"", "name=\"email\"", "id=\"email\""],
+    "correctAnswer": 0,
+    "learningObjective": "Mengukur pemahaman atribut input HTML yang umum digunakan."
+  },
+  {
+    "id": "HTML-03",
+    "category": "html",
+    "difficulty": "medium",
+    "question": "Manakah struktur yang paling tepat untuk sebuah judul utama halaman yang hanya memiliki satu topik utama?",
+    "options": [
+      "Menggunakan <div class=\"title\">",
+      "Menggunakan <span>",
+      "Menggunakan <h1>",
+      "Menggunakan <label>"
+    ],
+    "correctAnswer": 2,
+    "learningObjective": "Mengukur pemilihan semantic element dan struktur heading."
+  },
+  {
+    "id": "CSS-01",
+    "category": "css",
+    "difficulty": "easy",
+    "question": "Sebuah container menggunakan display: flex. Properti yang digunakan untuk mengatur jarak antar-item pada sumbu utama adalah...",
+    "options": ["align-items", "justify-content", "flex-direction", "position"],
+    "correctAnswer": 1,
+    "learningObjective": "Mengukur pemahaman dasar Flexbox."
+  },
+  {
+    "id": "CSS-02",
+    "category": "css",
+    "difficulty": "easy",
+    "question": "Sebuah card harus berubah menjadi satu kolom ketika lebar layar kurang dari 768px. Teknik CSS yang paling tepat adalah...",
+    "options": ["Media query", "CSS animation", "z-index", "pseudo-element"],
+    "correctAnswer": 0,
+    "learningObjective": "Mengukur pemahaman dasar responsive design."
+  },
+  {
+    "id": "CSS-03",
+    "category": "css",
+    "difficulty": "hard",
+    "question": "Perhatikan kondisi berikut: sebuah elemen memiliki width: 100%; padding: 20px; dan box-sizing: content-box. Jika parent memiliki lebar 300px, apa yang terjadi terhadap lebar total elemen secara horizontal, dengan asumsi tidak ada border?",
+    "options": [
+      "Tetap 300px karena padding termasuk width",
+      "Menjadi 340px karena padding ditambahkan di luar width",
+      "Menjadi 280px karena padding mengurangi width",
+      "Menjadi 320px karena hanya satu sisi padding yang dihitung"
+    ],
+    "correctAnswer": 1,
+    "learningObjective": "Mengukur pemahaman box model dan efek box-sizing."
+  },
+  {
+    "id": "JS-01",
+    "category": "javascript",
+    "difficulty": "easy",
+    "question": "Apa hasil dari kode berikut?\nconst numbers = [1, 2, 3];\nconst result = numbers.map(number => number * 2);",
+    "options": ["[1, 2, 3]", "[2, 4, 6]", "[1, 4, 9]", "[3, 6, 9]"],
+    "correctAnswer": 1,
+    "learningObjective": "Mengukur pemahaman dasar array method map."
+  },
+  {
+    "id": "JS-02",
+    "category": "javascript",
+    "difficulty": "easy",
+    "question": "Apa tujuan utama penggunaan addEventListener pada JavaScript?",
+    "options": [
+      "Menambahkan file CSS ke halaman",
+      "Menjalankan fungsi ketika event tertentu terjadi pada sebuah element",
+      "Menghapus seluruh DOM",
+      "Mengubah nama domain website"
+    ],
+    "correctAnswer": 1,
+    "learningObjective": "Mengukur pemahaman dasar event handling dan DOM."
+  },
+  {
+    "id": "JS-03",
+    "category": "javascript",
+    "difficulty": "medium",
+    "question": "Perhatikan kode berikut:\nconst numbers = [1, 2, 3, 4, 5];\nconst result = numbers.filter(number => number > 2);\nNilai result adalah...",
+    "options": ["[1, 2]", "[2, 3]", "[3, 4, 5]", "[1, 2, 3, 4, 5]"],
+    "correctAnswer": 2,
+    "learningObjective": "Mengukur pemahaman array filtering."
+  },
+  {
+    "id": "JS-04",
+    "category": "javascript",
+    "difficulty": "hard",
+    "question": "Perhatikan kode berikut:\nconst user = { name: \"Nazwa\" };\nconst result = user?.profile?.name ?? \"Belum tersedia\";\nApa nilai result?",
+    "options": ["undefined", "null", "\"Nazwa\"", "\"Belum tersedia\""],
+    "correctAnswer": 3,
+    "learningObjective": "Mengukur reasoning terhadap optional chaining dan nullish coalescing."
+  },
+  {
+    "id": "LOGIC-01",
+    "category": "programming-logic",
+    "difficulty": "easy",
+    "question": "Sebuah program harus menampilkan \"Lulus\" jika nilai siswa minimal 75 dan \"Tidak Lulus\" jika kurang dari 75. Struktur logika yang paling tepat adalah...",
+    "options": ["if / else", "for", "while", "switch tanpa kondisi nilai"],
+    "correctAnswer": 0,
+    "learningObjective": "Mengukur pemahaman dasar conditional logic."
+  },
+  {
+    "id": "LOGIC-02",
+    "category": "programming-logic",
+    "difficulty": "medium",
+    "question": "Sebuah program harus menghitung jumlah seluruh angka dalam array [2, 4, 6, 8]. Pendekatan yang paling tepat adalah...",
+    "options": [
+      "Menggunakan perulangan untuk membaca setiap elemen lalu menjumlahkannya",
+      "Mengambil hanya elemen pertama",
+      "Mengurutkan array tanpa melakukan penjumlahan",
+      "Mengubah semua angka menjadi string"
+    ],
+    "correctAnswer": 0,
+    "learningObjective": "Mengukur kemampuan memilih pendekatan dasar untuk problem solving."
+  },
+  {
+    "id": "LOGIC-03",
+    "category": "programming-logic",
+    "difficulty": "hard",
+    "question": "Sebuah daftar angka perlu diperiksa untuk menemukan apakah terdapat minimal satu angka yang lebih besar dari 100. Program tidak perlu menghitung jumlah angka tersebut. Pendekatan yang paling sesuai adalah...",
+    "options": [
+      "Memeriksa setiap angka dan berhenti ketika menemukan angka > 100",
+      "Mengurutkan seluruh angka lalu selalu mengambil angka pertama",
+      "Mengubah semua angka menjadi string sebelum dibandingkan",
+      "Menjumlahkan seluruh angka lalu membandingkan totalnya dengan 100"
+    ],
+    "correctAnswer": 0,
+    "learningObjective": "Mengukur reasoning tentang pencarian kondisi dan efisiensi proses sederhana."
+  }
+]

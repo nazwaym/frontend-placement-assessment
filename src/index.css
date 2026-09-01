@@ -1,0 +1,162 @@
+@import "tailwindcss";
+
+/* Palette derived from Scholarstoday's biodata page (navy/gold/cream identity),
+   with our own shades and roles — not a 1:1 copy of their hex values. */
+@theme {
+  --color-primary: #1e3a8a; /* Deep professional blue */
+  --color-primary-hover: #1e40af;
+  --color-primary-soft: #eff6ff;
+  --color-accent: #eeb022;
+  --color-accent-hover: #d89a0f;
+  --color-accent-soft: #fef3c7;
+  --color-background: #f9fafb; /* Clean neutral background */
+  --color-surface: #ffffff; /* White surface */
+  --color-text: #111827; /* Dark text */
+  --color-text-muted: #6b7280; /* Gray muted text */
+  --color-border: #e5e7eb; /* Light border */
+  --color-success: #16a34a; /* Clean success green */
+  --color-warning: #d97706;
+  --color-error: #dc2626;
+
+  --font-sans: "Inter", system-ui, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Fraunces", "Georgia", serif;
+}
+
+@layer base {
+  body {
+    @apply bg-background text-text font-sans antialiased;
+    background-image: radial-gradient(var(--color-border) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+}
+
+@layer utilities {
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes float-y {
+    0%,
+    100% {
+      transform: translateY(0) rotate(var(--float-rotate, -4deg));
+    }
+    50% {
+      transform: translateY(-10px) rotate(var(--float-rotate, -4deg));
+    }
+  }
+
+  @keyframes marquee-scroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @keyframes draw-marker {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @keyframes pulse-ring {
+    0% {
+      box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-accent) 45%, transparent);
+    }
+    100% {
+      box-shadow: 0 0 0 14px color-mix(in srgb, var(--color-accent) 0%, transparent);
+    }
+  }
+
+  @keyframes pop-in {
+    from {
+      opacity: 0;
+      transform: scale(0.85) translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+
+  .animate-fade-up {
+    animation: fade-up 0.6s ease-out both;
+  }
+
+  .animate-float {
+    animation: float-y 5s ease-in-out infinite;
+  }
+
+  .animate-marquee {
+    animation: marquee-scroll 22s linear infinite;
+  }
+
+  .group:hover .animate-marquee,
+  .animate-marquee:hover {
+    animation-play-state: paused;
+  }
+
+  .animate-pop-in {
+    animation: pop-in 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+
+  .animate-pulse-ring {
+    animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .marker-draw {
+    stroke-dasharray: 300;
+    stroke-dashoffset: 300;
+    animation: draw-marker 0.7s ease-out 0.7s forwards;
+  }
+
+  @keyframes progress-arc {
+    from {
+      stroke-dashoffset: var(--arc-length, 283);
+    }
+    to {
+      stroke-dashoffset: var(--arc-target, 0);
+    }
+  }
+
+  .animate-arc {
+    animation: progress-arc 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
+  }
+
+  @keyframes bar-fill {
+    from {
+      width: 0%;
+    }
+    to {
+      width: var(--bar-target, 0%);
+    }
+  }
+
+  .animate-bar-fill {
+    animation: bar-fill 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
