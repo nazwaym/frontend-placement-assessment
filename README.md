@@ -144,7 +144,10 @@ asesments-frontend/
 
 ## 🤖 AI Prompt & Development Documentation
 
-Pengembangan aplikasi ini mengikuti prinsip **Human-Centered AI Pair Programming** sesuai panduan `AGENTS.md`:
+Pengembangan aplikasi ini mengikuti prinsip **Human-Centered AI Pair Programming** sesuai panduan `AGENTS.md`. Seluruh daftar prompt yang digunakan dalam pengembangan aplikasi tercatat secara lengkap pada dokumen:
+
+📄 **[AI Prompt Documentation (`docs/PROMPTS.md`)](docs/PROMPTS.md)**
+
 * **Product Decision & Scope**: Merujuk sepenuhnya pada `PRD.md` dan `Assessment Blueprint`.
 * **AI Assistance**: Digunakan untuk pembuatan boilerplate, perancangan arsitektur komponen, refactoring CSS tokens, penyusunan regex validasi, dan verifikasi accessibility.
 * **Review & QA**: Seluruh logic scoring (`correctCount / 15 * 100`), kriteria level (0-40, 41-75, 76-100), dan aturan validasi diuji secara manual serta melalui automated build & lint pass.
