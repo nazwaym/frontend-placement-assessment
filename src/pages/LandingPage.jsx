@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import Button from "../components/ui/Button";
 import Input from "../components/ui/Input";
 import StepIndicator from "../components/quiz/StepIndicator";
-import QuizPreviewCard from "../components/landing/QuizPreviewCard";
 import StatCounter from "../components/landing/StatCounter";
 import StartConfirmationModal from "../components/quiz/StartConfirmationModal";
 import { useQuiz } from "../hooks/useQuiz";
@@ -105,9 +104,6 @@ export default function LandingPage() {
           </div>
 
 
-          <div className="mt-10 flex justify-center lg:justify-start">
-            <QuizPreviewCard className="hidden sm:block" />
-          </div>
         </div>
 
         <div className="relative w-full min-w-0 lg:max-w-md lg:justify-self-end">
