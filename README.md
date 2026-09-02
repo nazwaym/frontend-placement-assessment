@@ -97,7 +97,7 @@ asesments-frontend/
 │   ├── App.jsx              # Main routing configuration
 │   ├── index.css            # Design tokens & global CSS styles
 │   └── main.jsx             # React entry point
-├── docs/                    # Dokumentasi proyek (requirements, AI usage, blueprint)
+├── documentation/           # Dokumentasi proyek (requirements, AI usage, blueprint)
 ├── index.html
 ├── package.json
 └── vite.config.js
@@ -146,7 +146,7 @@ asesments-frontend/
 
 Pengembangan aplikasi ini mengikuti prinsip **Human-Centered AI Pair Programming**. Seluruh daftar prompt yang digunakan dalam pengembangan aplikasi tercatat secara lengkap pada dokumen:
 
-📄 **[AI Usage Documentation (`docs/AI_USAGE.md`)](docs/AI_USAGE.md)**
+📄 **[AI Usage Documentation (`documentation/AI_USAGE.md`)](documentation/AI_USAGE.md)**
 
 * **Product Decision & Scope**: Merujuk sepenuhnya pada `PROJECT_REQUIREMENTS.md` dan `Assessment Blueprint`.
 * **AI Assistance**: Digunakan untuk pembuatan boilerplate, perancangan arsitektur komponen, refactoring CSS tokens, penyusunan regex validasi, dan verifikasi accessibility.
