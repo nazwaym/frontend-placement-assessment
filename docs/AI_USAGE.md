@@ -6,13 +6,15 @@ Dokumen ini berisi catatan prompt Artificial Intelligence (AI) yang digunakan se
 
 ## 📋 Summary Usage
 
-* **AI Agent Role**: Pair Programming & Code Architecture Assistant.
+* **AI Agent Role**: Development Assistant & Pair Programming Support
 * **Scope of AI Assistance**:
-  1. Analisis requirement PRD & Assessment Blueprint.
-  2. Pembuatan komponen UI modular menggunakan React + Tailwind CSS v4.
-  3. Redesign UX Assessment Workspace (3-column layout, inline validation, mobile bottom sheet).
-  4. Redesign Halaman Hasil & Rekomendasi (`/result`) dengan visualisasi SVG progress ring, analisa kekuatan/kelemahan, dan generator pesan WhatsApp.
-  5. Penyusunan dokumentasi `README.md` dan penanganan edge cases.
+  - Membantu menganalisis requirement berdasarkan konsep dan blueprint yang telah dibuat.
+  - Membantu melakukan review assessment structure dan question mapping.
+  - Membantu menerjemahkan requirement ke struktur project React yang modular.
+  - Membantu implementasi dan refinement fitur assessment.
+  - Membantu mengeksplorasi alternatif UI/UX berdasarkan design direction yang telah ditentukan.
+  - Membantu refinement responsive behavior, validation, dan edge cases.
+  - Membantu pengecekan teknis dan dokumentasi project.
 
 ---
 
@@ -20,16 +22,20 @@ Dokumen ini berisi catatan prompt Artificial Intelligence (AI) yang digunakan se
 
 ### 1. Initial Product Idea
 **Tujuan**
-Sebelum menggunakan AI, konsep dasar aplikasi sudah ditentukan sebagai Frontend Assessment yang digunakan untuk mengetahui kemampuan dasar peserta pada beberapa kompetensi frontend.
-Konsep awal yang ingin dibangun adalah assessment yang tidak hanya memberikan nilai akhir, tetapi juga dapat menunjukkan kemampuan peserta berdasarkan kategori dan memberikan rekomendasi program yang sesuai dengan hasil assessment.
-AI kemudian digunakan untuk membantu mengembangkan ide tersebut menjadi requirement dan flow yang lebih terstruktur.
+Sebelum menggunakan AI, saya sudah menentukan konsep dasar Frontend Placement Test.
+Soal, aturan soal, kategori, competency, difficulty, bobot, dan struktur assessment sudah saya susun dalam file `Question_Rules_Assessment_Blueprint`.
+AI digunakan untuk membantu mengembangkan konsep yang sudah ada menjadi product thinking, user flow, assessment experience, result experience, dan requirement sebelum coding.
 
 **Prompt yang Digunakan**
-> Aku ingin membuat sebuah frontend assessment untuk mengetahui kemampuan peserta di bidang frontend development. Konsep dasarnya adalah peserta mengerjakan beberapa soal yang mencakup kemampuan seperti HTML, CSS, JavaScript, Web Fundamentals, dan Programming Logic.
+> Aku sudah menentukan konsep dasar frontend assessment untuk mengetahui kemampuan peserta di bidang frontend development. Peserta akan mengerjakan beberapa soal yang mencakup kemampuan seperti HTML, CSS, JavaScript, Web Fundamentals, dan Programming Logic.
+> 
+> Soal dan struktur assessment sudah aku susun sebelumnya dalam file Question_Rules_Assessment_Blueprint, termasuk aturan dan blueprint yang menjadi dasar assessment.
 > 
 > Aku ingin hasil assessment nantinya tidak hanya menampilkan nilai, tetapi juga menunjukkan performa peserta di setiap kategori dan memberikan rekomendasi program berdasarkan hasil tersebut.
 > 
-> Bantu aku mengembangkan konsep ini dari sisi product thinking, user flow, assessment structure, dan hal-hal yang perlu diperhatikan sebelum masuk ke tahap coding.
+> Berdasarkan konsep dan blueprint yang sudah aku buat, bantu aku mengembangkan produk ini dari sisi product thinking, user flow, assessment experience, result experience, serta hal-hal yang perlu diperhatikan sebelum masuk ke tahap coding.
+> 
+> Jangan membuat ulang soal atau mengubah blueprint yang sudah ada. Gunakan file tersebut sebagai acuan utama.
 
 **Hasil**
 Konsep awal tersebut kemudian dikembangkan menjadi assessment dengan alur:
@@ -65,18 +71,24 @@ Dari proses tersebut, assessment diarahkan agar hasil akhirnya memiliki alur:
 Artinya peserta tidak hanya mengetahui nilainya, tetapi juga memahami kemampuan yang terlihat dari hasil assessment dan mengetahui langkah berikutnya.
 
 ### 4. Assessment Blueprint
+**Tujuan**
+Blueprint sudah dibuat dalam file `Question_Rules_Assessment_Blueprint`. AI digunakan untuk membantu melakukan review terhadap kategori, competency, difficulty, bobot, dan tujuan pengukuran.
+
 **Prompt yang Digunakan**
-> Aku ingin assessment ini terdiri dari 15 soal. Bantu aku membuat blueprint berdasarkan kompetensi frontend yang ingin diukur. Setiap soal perlu memiliki kategori, competency, difficulty, bobot, dan tujuan pengukuran supaya soal yang dibuat tidak random.
+> Aku sudah membuat blueprint assessment dalam file Question_Rules_Assessment_Blueprint. Bantu aku melakukan review terhadap struktur yang sudah dibuat, terutama hubungan antara kategori, competency, difficulty, bobot, dan tujuan pengukuran. Pastikan struktur tersebut konsisten dengan tujuan Frontend Placement Test dan jangan mengubah blueprint tanpa alasan yang jelas.
 
 **Hasil**
-Blueprint digunakan sebagai dasar penyusunan 15 soal dan menjadi penghubung antara `question → competency → scoring → recommendation`.
+Blueprint yang direview digunakan sebagai dasar penyusunan 15 soal dan menjadi penghubung antara `question → competency → scoring → recommendation`.
 
 ### 5. Question Mapping & Validation
+**Tujuan**
+Mapping dilakukan berdasarkan blueprint yang sudah dibuat. AI berperan sebagai reviewer untuk membantu memastikan setiap soal sesuai dengan kategori, competency, difficulty, bobot, dan tujuan pengukurannya.
+
 **Prompt yang Digunakan**
 > Aku sudah menentukan struktur assessment-nya. Bantu aku mapping setiap soal ke kategori, competency, difficulty, dan bobotnya. Setelah itu review apakah setiap soal benar-benar sesuai dengan kemampuan yang ingin diukur dan apakah tingkat kesulitannya sudah masuk akal.
 
 **Hasil**
-Setiap pertanyaan memiliki mapping yang jelas sehingga hasil assessment nantinya dapat dianalisis berdasarkan kategori, bukan hanya berdasarkan jumlah jawaban benar.
+Setiap pertanyaan memiliki mapping yang divalidasi dengan jelas sehingga hasil assessment nantinya dapat dianalisis berdasarkan kategori, bukan hanya berdasarkan jumlah jawaban benar.
 
 ### 6. Scoring & Assessment Logic
 **Prompt yang Digunakan**
@@ -133,11 +145,10 @@ Menyempurnakan pengalaman inti saat mengerjakan soal: bagaimana jawaban disimpan
 
 **Hasil / Keputusan**
 - Jawaban tersimpan langsung ke satu sumber state (`answers[questionId]` di `QuizContext`) setiap kali opsi dipilih, dan otomatis dipersist ke `localStorage` — berpindah soal atau refresh browser tidak menghilangkan jawaban yang sudah dipilih.
-- Navigasi antar soal (Sebelumnya / Selanjutnya / klik langsung di Question Navigator) dibiarkan bebas, sejalan dengan `PROJECT_REQUIREMENTS.md` §12 yang mengizinkan user melompat ke soal manapun tanpa harus menjawab urut.
-- Status "sudah dijawab / belum dijawab / soal aktif" di Question Navigator (desktop sidebar & mobile bottom sheet) diturunkan langsung dari keberadaan jawaban di state — bukan flag terpisah, supaya tidak ada risiko status yang tidak sinkron dengan jawaban sebenarnya.
-- Pengecekan kelengkapan 15/15 soal dipusatkan di satu titik, yaitu modal review sebelum submit, yang menghitung jumlah soal terjawab vs belum secara real-time dari `answers`.
-- Timer 20 menit berjalan di header assessment dan memicu auto-submit begitu mencapai 00:00, melewati pengecekan kelengkapan jawaban, supaya sesi tidak menggantung tanpa hasil akhir.
-- Catatan tinjauan: infrastruktur validasi inline per-soal (state `validationError` pada `QuestionCard`) tetap dipertahankan di komponen, namun keputusan akhir menempatkan validasi kelengkapan di tahap review/submit — bukan memblokir setiap kali user berpindah soal — supaya tetap konsisten dengan `PROJECT_REQUIREMENTS.md` §12.
+- Status "sudah dijawab / belum dijawab / soal aktif" di Question Navigator diturunkan langsung dari keberadaan jawaban di state — bukan flag terpisah, supaya tidak ada risiko status yang tidak sinkron dengan jawaban sebenarnya.
+
+**Catatan Iterasi**
+Setelah ditinjau kembali dari sisi user experience, keputusan "User tidak boleh berpindah soal sebelum memilih jawaban" diubah menjadi navigasi bebas. User akhirnya dapat berpindah antar-soal tanpa harus menjawab terlebih dahulu, sedangkan validasi kelengkapan 15 soal dilakukan pada tahap review sebelum submit. Timeout tetap menjadi pengecualian dan akan melakukan auto-submit meskipun terdapat soal yang belum dijawab.
 
 ---
 
@@ -158,7 +169,9 @@ Memastikan halaman hasil tidak hanya menampilkan angka, tapi memiliki hierarki i
 **Hasil / Keputusan**
 - Halaman `/result` disusun sebagai rangkaian komponen yang mengikuti hierarki tersebut secara berurutan: `CapabilitySummary` (skor & level) → `CategoryPerformance` (breakdown per kategori dengan bar indicator) → `ResultInsight` (kekuatan/area yang perlu ditingkatkan) → `RecommendationCard` (program + alasan) → `LearningPath` (fokus belajar) → `ResultCTA` (WhatsApp).
 - Threshold Capability Level (0–40 Beginner, 41–75 Intermediate, 76–100 Advanced) dan pemetaan rekomendasi tetap mengacu ke `PROJECT_REQUIREMENTS.md` §18 dan §20 — redesign ini murni pada sisi presentasi, bukan mengubah logic penentuan level atau rekomendasi.
-- Insight "kekuatan vs perlu ditingkatkan" dihitung otomatis dari `categoryPerformance` yang sama, hasil dari `calculateCategoryPerformance` di `src/lib/scoring.js` — tidak ada sumber data baru, hanya presentasi tambahan dari data yang sudah ada.
+
+**Catatan Iterasi**
+Setelah review terhadap result page, section “Kekuatan Kamu” dan “Yang Perlu Ditingkatkan” (dari prompt di atas) tidak digunakan pada versi final karena informasinya terlalu berulang dengan Category Performance dan Result Insight. Keputusan tersebut merupakan refinement berdasarkan evaluasi desain dan hierarchy informasi.
 
 ---
 
