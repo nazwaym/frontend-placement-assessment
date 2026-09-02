@@ -102,57 +102,197 @@ Setelah konsep, requirement, assessment structure, dan scoring sudah jelas, hasi
 
 ---
 
-## 📝 Prompt Log & History (Implementation & UI/UX)
+### 8. Implementation & Architecture
 
-### Prompt 1: Assessment Workspace UI/UX Redesign
-```text
-Saya ingin melakukan redesign halaman assessment Frontend Placement Test yang sudah ada.
-JANGAN mengubah logic utama aplikasi (data soal, scoring, jawaban user, navigasi soal, routing, timer, assessment state).
-Fokus utama pekerjaan adalah REDESIGN UI/UX halaman assessment agar terasa seperti produk EdTech assessment profesional.
-...
-Struktur Desktop:
-HEADER: Logo, Frontend Placement Test, Progress, Timer
-LEFT SIDEBAR: Question Navigator
-CENTER: Question Workspace (QuestionCard, CodeBlock, Interactive Option Cards A/B/C/D)
-RIGHT: Assessment Information
-BOTTOM NAVIGATION: Previous, Next / Review Jawaban
-MOBILE: Single column dengan "Daftar Soal" drawer / bottom sheet.
-```
+**Tujuan**
+Setelah `PROJECT_REQUIREMENTS.md` dan `AGENTS.md` selesai sebagai source of truth, AI digunakan untuk menerjemahkan requirement tersebut menjadi struktur project React yang modular, reusable, dan mudah dikembangkan, sebelum masuk ke detail implementasi tiap fitur.
 
-### Prompt 2: Validasi & Flow Pengerjaan Soal (Inline Validation & Timeout Handling)
-```text
-Aku mau memperbaiki flow dan validation pada halaman assessment:
-- User tidak boleh berpindah soal sebelum memilih jawaban.
-- Tampilkan feedback inline: "Silakan pilih salah satu jawaban terlebih dahulu." (tanpa browser alert).
-- Pengecekan 15/15 soal pada modal review sebelum submit final.
-- PENGECUALIAN TIMEOUT: Jika timer 20 menit habis (00:00), otomatis submit tanpa memblokir soal kosong.
-- Single source of truth untuk status jawaban (answers[questionId]).
-```
+**Prompt yang Digunakan**
+> sekarang kita lanjut untuk membikin struktur file yg bisa mudah dipahami dan terstruktur. lalu menginstall apa yg harus di install dengan sesuai ketentuan pada prd dam agents. menggunakan dengan penggunaan ract vite dengan ketentuan dan persyaratan teknisnya.
 
-### Prompt 3: Redesign Halaman Hasil & Rekomendasi (/result)
-```text
-Aku mau redesign halaman hasil assessment yang sekarang agar terasa seperti hasil yang personal dan profesional:
-- Visualisasi score dengan SVG progress arc / ring.
-- Badge Capability Level (Beginner: 0-40%, Intermediate: 41-75%, Advanced: 76-100%).
-- Analisa otomatis "Kekuatan Kamu" (>=67%) dan "Yang Perlu Ditingkatkan" (<67%) berdasarkan categoryPerformance.
-- Insight naratif kontekstual berdasarkan level dan skor.
-- Card Rekomendasi Program beserta alasan (rationale) dan chip topik fokus.
-- WhatsApp CTA otomatis dengan format pesan nama, skor, level, dan program yang diminati.
-```
+**Hasil / Keputusan**
+- Struktur folder dipisah berdasarkan tanggung jawab: `src/pages` (halaman/route), `src/components/{ui,quiz,result}` (komponen reusable per domain), `src/context` + `src/hooks` (state management), `src/lib` (pure function: scoring, level, rekomendasi, randomisasi, storage, validasi, WhatsApp message), `src/data` (question bank JSON).
+- Dependency dipasang sesuai batasan `AGENTS.md`: React + Vite + Tailwind CSS v4 (lewat plugin resmi, tanpa config PostCSS manual) + React Router untuk routing antar halaman — tanpa Next.js dan tanpa component library pihak ketiga.
+- State assessment (`QuizContext` + `useQuiz`) dipisahkan dari komponen presentasional, supaya logic scoring dan navigasi tidak bercampur dengan tampilan.
+- Logic scoring, penentuan level, dan rekomendasi ditulis sebagai pure function di `src/lib` (bukan langsung di dalam komponen React), supaya tidak ada logic yang terduplikasi antar halaman.
 
-### Prompt 4: Flow Konfirmasi Pre-Assessment (Moment of Commitment)
-```text
-Tampilkan confirmation card/modal "Siap Memulai Assessment?" setelah user mengisi form biodata dengan valid:
-- Timer BELUM berjalan saat modal tampil.
-- Tombol "Kembali" menutup modal tanpa menghapus data form.
-- Tombol "Mulai Assessment" menginisialisasi sesi, memulai timer, dan pindah ke /assessment.
-- Hapus card "Informasi Ujian" dari right sidebar agar workspace 2 kolom di desktop lebih lapang.
-```
+---
+
+### 9. Assessment State & User Experience
+
+**Tujuan**
+Menyempurnakan pengalaman inti saat mengerjakan soal: bagaimana jawaban disimpan, bagaimana user berpindah antar soal, dan bagaimana sistem menangani validasi kelengkapan jawaban serta batas waktu pengerjaan.
+
+**Prompt yang Digunakan**
+> Aku mau memperbaiki flow dan validation pada halaman assessment:
+> - User tidak boleh berpindah soal sebelum memilih jawaban.
+> - Tampilkan feedback inline: "Silakan pilih salah satu jawaban terlebih dahulu." (tanpa browser alert).
+> - Pengecekan 15/15 soal pada modal review sebelum submit final.
+> - PENGECUALIAN TIMEOUT: Jika timer 20 menit habis (00:00), otomatis submit tanpa memblokir soal kosong.
+> - Single source of truth untuk status jawaban (answers[questionId]).
+
+**Hasil / Keputusan**
+- Jawaban tersimpan langsung ke satu sumber state (`answers[questionId]` di `QuizContext`) setiap kali opsi dipilih, dan otomatis dipersist ke `localStorage` — berpindah soal atau refresh browser tidak menghilangkan jawaban yang sudah dipilih.
+- Navigasi antar soal (Sebelumnya / Selanjutnya / klik langsung di Question Navigator) dibiarkan bebas, sejalan dengan `PROJECT_REQUIREMENTS.md` §12 yang mengizinkan user melompat ke soal manapun tanpa harus menjawab urut.
+- Status "sudah dijawab / belum dijawab / soal aktif" di Question Navigator (desktop sidebar & mobile bottom sheet) diturunkan langsung dari keberadaan jawaban di state — bukan flag terpisah, supaya tidak ada risiko status yang tidak sinkron dengan jawaban sebenarnya.
+- Pengecekan kelengkapan 15/15 soal dipusatkan di satu titik, yaitu modal review sebelum submit, yang menghitung jumlah soal terjawab vs belum secara real-time dari `answers`.
+- Timer 20 menit berjalan di header assessment dan memicu auto-submit begitu mencapai 00:00, melewati pengecekan kelengkapan jawaban, supaya sesi tidak menggantung tanpa hasil akhir.
+- Catatan tinjauan: infrastruktur validasi inline per-soal (state `validationError` pada `QuestionCard`) tetap dipertahankan di komponen, namun keputusan akhir menempatkan validasi kelengkapan di tahap review/submit — bukan memblokir setiap kali user berpindah soal — supaya tetap konsisten dengan `PROJECT_REQUIREMENTS.md` §12.
+
+---
+
+### 10. Result & Recommendation UX
+
+**Tujuan**
+Memastikan halaman hasil tidak hanya menampilkan angka, tapi memiliki hierarki informasi yang jelas: hasil → performa kategori → insight → rekomendasi → next action, mengikuti prinsip "Result → Meaning → Evidence → Recommendation → Next Action" yang sudah ditentukan pada tahap Product Thinking (bagian 3).
+
+**Prompt yang Digunakan**
+> Aku mau redesign halaman hasil assessment yang sekarang agar terasa seperti hasil yang personal dan profesional:
+> - Visualisasi score dengan SVG progress arc / ring.
+> - Badge Capability Level (Beginner: 0-40%, Intermediate: 41-75%, Advanced: 76-100%).
+> - Analisa otomatis "Kekuatan Kamu" (>=67%) dan "Yang Perlu Ditingkatkan" (<67%) berdasarkan categoryPerformance.
+> - Insight naratif kontekstual berdasarkan level dan skor.
+> - Card Rekomendasi Program beserta alasan (rationale) dan chip topik fokus.
+> - WhatsApp CTA otomatis dengan format pesan nama, skor, level, dan program yang diminati.
+
+**Hasil / Keputusan**
+- Halaman `/result` disusun sebagai rangkaian komponen yang mengikuti hierarki tersebut secara berurutan: `CapabilitySummary` (skor & level) → `CategoryPerformance` (breakdown per kategori dengan bar indicator) → `ResultInsight` (kekuatan/area yang perlu ditingkatkan) → `RecommendationCard` (program + alasan) → `LearningPath` (fokus belajar) → `ResultCTA` (WhatsApp).
+- Threshold Capability Level (0–40 Beginner, 41–75 Intermediate, 76–100 Advanced) dan pemetaan rekomendasi tetap mengacu ke `PROJECT_REQUIREMENTS.md` §18 dan §20 — redesign ini murni pada sisi presentasi, bukan mengubah logic penentuan level atau rekomendasi.
+- Insight "kekuatan vs perlu ditingkatkan" dihitung otomatis dari `categoryPerformance` yang sama, hasil dari `calculateCategoryPerformance` di `src/lib/scoring.js` — tidak ada sumber data baru, hanya presentasi tambahan dari data yang sudah ada.
+
+---
+
+### 11. Edge Case & Validation
+
+**Tujuan**
+Memastikan titik-titik rawan pada flow assessment (soal belum lengkap, submit ganda, timeout, akses ulang setelah selesai) ditangani secara eksplisit, bukan dibiarkan sebagai default behavior yang tidak terduga.
+
+**Prompt yang Digunakan**
+> Tampilkan confirmation card/modal "Siap Memulai Assessment?" setelah user mengisi form biodata dengan valid:
+> - Timer BELUM berjalan saat modal tampil.
+> - Tombol "Kembali" menutup modal tanpa menghapus data form.
+> - Tombol "Mulai Assessment" menginisialisasi sesi, memulai timer, dan pindah ke /assessment.
+> - Hapus card "Informasi Ujian" dari right sidebar agar workspace 2 kolom di desktop lebih lapang.
+
+**Hasil / Keputusan**
+- Sesi assessment (dan timer) baru benar-benar mulai setelah user secara eksplisit mengonfirmasi di modal "Siap Memulai Assessment?" — mencegah timer berjalan diam-diam saat user masih membaca halaman pengenalan.
+- Submit dilindungi dari double-submit menggunakan ref guard (`hasSubmittedRef`) di `QuizPage`: baik submit manual dari modal review maupun auto-submit saat timeout hanya bisa terpicu satu kali per sesi.
+- Assessment yang sudah di-submit terkunci dari sisi routing: mencoba mengakses `/assessment` lagi setelah status menjadi `submitted` otomatis diarahkan ke `/result`, dan sebaliknya mengakses `/result` sebelum submit diarahkan kembali ke `/assessment` — status sesi di `QuizContext` menjadi satu-satunya sumber kebenaran untuk keputusan redirect ini.
+- Soal yang belum dijawab saat submit ditangani lewat modal review: menampilkan jumlah soal terjawab/belum, dan menyediakan navigasi langsung ke soal pertama yang belum dijawab sebagai bantuan.
+- Timeout (20 menit habis) memicu auto-submit meskipun masih ada soal kosong, melewati pengecekan kelengkapan — konsisten dengan keputusan bahwa sesi tidak boleh menggantung tanpa hasil akhir.
+- Jawaban yang sudah dipilih tetap tersimpan saat user berpindah soal maupun saat browser di-refresh, karena disimpan ke `localStorage` setiap kali state berubah (bukan hanya saat submit).
+
+---
+
+### 12. UI/UX Design & Refinement
+
+#### 12.1 Design Direction
+**Sebelum masuk ke tahap implementasi UI**, arah desain ditentukan berdasarkan kebutuhan produk sebagai Frontend Placement Test, dengan mempertimbangkan karakteristik produk assessment/EdTech.
+Referensi visual digunakan untuk membantu menentukan mood, warna, dan feel yang ingin dicapai. Salah satu referensi yang digunakan adalah Scholarstoday, terutama sebagai inspirasi visual, tetapi desain akhir dikembangkan dengan identitas dan kebutuhan project sendiri.
+
+**Prompt yang Digunakan — Menentukan Arah Desain**
+> Aku ingin membuat UI/UX untuk Frontend Placement Test yang terasa seperti produk assessment/EdTech modern. Aku ingin menggunakan Scholarstoday sebagai salah satu referensi visual, terutama dari sisi color palette dan feel, tetapi tidak ingin menyalin desainnya secara langsung. Aku ingin desainnya tetap punya identitas sendiri, lebih interaktif, responsive, dan tidak terlihat seperti template AI. Tolong bantu kembangkan konsep desain berdasarkan arahan tersebut.
+
+**Hasil**
+AI digunakan untuk membantu mengeksplorasi kemungkinan layout, visual hierarchy, komponen, dan interaction pattern berdasarkan arahan desain yang telah ditentukan. Keputusan mengenai konsep visual, referensi, dan karakter desain tetap disesuaikan dengan kebutuhan project.
+
+#### 12.2 Landing Page Design
+Setelah arah visual ditentukan, desain landing page dikembangkan agar tidak hanya berfungsi sebagai halaman pembuka, tetapi juga memberikan gambaran kepada user mengenai assessment yang akan dilakukan.
+
+Beberapa hal yang menjadi perhatian:
+- Introduction yang lebih informatif dan engaging.
+- Penjelasan singkat mengenai assessment.
+- Informasi jumlah soal dan jenis kompetensi yang diukur.
+- CTA yang jelas untuk melanjutkan ke tahap berikutnya.
+- Responsive layout untuk desktop, tablet, dan mobile.
+- Penggunaan visual element dan micro-interaction secara seperlunya.
+
+**Prompt yang Digunakan — Landing Page**
+> Aku ingin redesign halaman awal Frontend Placement Test. Gunakan arahan desain yang sudah ditentukan sebelumnya sebagai acuan. Halaman awal jangan hanya menampilkan judul dan deskripsi, tetapi berikan introduction yang lebih menarik dan membantu user memahami assessment sebelum memulai. Buat layout yang responsive untuk desktop, tablet, dan mobile serta tambahkan elemen interaktif yang tetap sesuai dengan karakter produk.
+
+**Hasil**
+Landing page dikembangkan dengan struktur yang lebih komunikatif, seperti introduction, informasi assessment, preview konten, dan CTA. Beberapa elemen visual dan interaction ditambahkan untuk membuat halaman lebih hidup tanpa mengganggu tujuan utama halaman.
+
+#### 12.3 Assessment Workspace Design
+Untuk halaman assessment, fokus desain diarahkan pada kemudahan membaca soal, menjawab, berpindah soal, dan mengetahui progress assessment.
+
+Struktur workspace yang digunakan meliputi:
+- Header dengan informasi assessment, progress, dan timer.
+- Question navigator.
+- Question workspace.
+- Code block untuk soal yang membutuhkan potongan kode.
+- Interactive answer options.
+- Navigation antar-soal.
+- Responsive behavior untuk perangkat mobile.
+
+**Prompt yang Digunakan — Assessment Workspace**
+> Saya ingin melakukan redesign halaman assessment Frontend Placement Test yang sudah ada. Jangan mengubah logic utama aplikasi seperti data soal, scoring, jawaban user, navigasi soal, routing, timer, dan assessment state. Fokus utama pekerjaan adalah memperbaiki UI/UX agar workspace assessment lebih nyaman digunakan dan terasa seperti produk assessment yang profesional. Perhatikan hierarchy informasi, question navigator, question card, answer options, progress, timer, dan responsive behavior pada mobile.
+
+**Hasil**
+AI membantu menerjemahkan kebutuhan tersebut ke dalam struktur komponen React dan styling Tailwind yang modular. Fokus utama refinement adalah readability, spacing, hierarchy, status soal, dan kemudahan navigasi.
+
+#### 12.4 Iterasi Desain Berdasarkan Hasil Tampilan
+Setelah implementasi awal selesai, hasil tampilan diperiksa kembali melalui browser. Evaluasi dilakukan berdasarkan tampilan aktual, terutama pada hierarchy, spacing, responsiveness, dan pengalaman interaksi.
+
+**Prompt yang Digunakan — Iterasi Desain**
+> Aku sudah melihat hasil desain yang dibuat dan ingin melakukan beberapa refinement supaya tampilannya lebih memiliki karakter yang sesuai dengan konsep Frontend Placement Test. Tolong evaluasi kembali hierarchy, spacing, interaksi, dan elemen visualnya.
+> 
+> Aku ingin desainnya terasa lebih natural, engaging, dan tidak terlalu generik. Jika memang sesuai dengan konteks halaman, tambahkan animasi dan micro-interaction yang membantu user memahami alur dan membuat pengalaman assessment lebih menarik, terutama pada bagian introduction dan elemen yang dapat berinteraksi.
+
+**Hasil**
+Refinement dilakukan terhadap beberapa aspek visual dan interaction, termasuk:
+- Spacing dan visual hierarchy.
+- Struktur introduction.
+- CTA dan interactive elements.
+- Micro-interaction.
+- Animasi yang mendukung perpindahan atau feedback user.
+- Responsive behavior.
+- Konsistensi antar halaman.
+Animasi tidak ditambahkan hanya sebagai dekorasi, tetapi dipertimbangkan berdasarkan konteks interaksi agar tetap mendukung usability.
+
+#### 12.5 Result Page & Recommendation UX
+Pada halaman hasil, desain diarahkan agar hasil assessment tidak berhenti pada angka atau score. Informasi disusun berdasarkan alur:
+`Result → Meaning → Evidence → Recommendation → Next Action`
+
+Struktur utama hasil meliputi:
+- Capability Level dan score.
+- Performa berdasarkan kategori.
+- Insight berdasarkan hasil assessment.
+- Program yang direkomendasikan.
+- Focus learning.
+- Learning path atau langkah selanjutnya.
+- CTA untuk melanjutkan ke tahap berikutnya.
+
+Pada tahap refinement, bagian “Kekuatan Kamu” dan “Yang Perlu Ditingkatkan” tidak dipertahankan sebagai section terpisah karena informasi tersebut sudah tercakup dalam category performance dan insight. Hal ini dilakukan untuk mengurangi pengulangan informasi pada halaman hasil.
+
+**Prompt yang Digunakan — Result & Recommendation**
+> Aku mau redesign halaman hasil assessment yang sekarang agar terasa seperti hasil yang personal dan profesional. Hasil jangan hanya menampilkan score, tetapi bantu user memahami capability level, performa setiap kategori, insight dari hasil assessment, serta rekomendasi program yang sesuai. Buat recommendation area lebih personal dan actionable, misalnya dengan focus learning, learning path, dan langkah selanjutnya. Perhatikan hierarchy informasi dan jangan membuat section yang informasinya terlalu berulang.
+
+**Hasil**
+Halaman result dikembangkan menjadi lebih informatif dan actionable. User tidak hanya mengetahui nilai akhirnya, tetapi juga mendapatkan gambaran mengenai kemampuan yang diukur dan rekomendasi langkah berikutnya.
+
+#### 12.6 Peran AI dalam Proses UI/UX
+AI tidak digunakan sebagai satu-satunya sumber keputusan desain. Arah visual dan kebutuhan UX ditentukan berdasarkan konsep produk, kebutuhan assessment, referensi visual, serta hasil evaluasi tampilan secara langsung.
+
+AI digunakan terutama untuk:
+- Mengeksplorasi alternatif layout dan interaction.
+- Membantu menerjemahkan ide UI/UX ke komponen React.
+- Membantu implementasi styling menggunakan Tailwind CSS.
+- Memberikan alternatif responsive behavior.
+- Membantu melakukan refinement setelah hasil implementasi diperiksa.
+- Membantu menemukan kemungkinan masalah pada hierarchy, spacing, dan usability.
+
+Dengan demikian, proses UI/UX bersifat iteratif, yaitu:
+`Product Need → Design Direction → Initial Implementation → Browser Review → Refinement → Final UI/UX`
+
+Keputusan akhir tetap disesuaikan dengan kebutuhan dan karakteristik Frontend Placement Test, bukan semata-mata mengikuti output AI.
 
 ---
 
 ## 🔍 Validation & Human Review
-Setiap output AI telah melalui verifikasi teknis secara manual:
-- All React components use standard hooks (`useState`, `useEffect`, `useReducer`, `useRef`).
-- State hydration and `localStorage` persistence are verified.
-- Oxlint linting and Vite production build commands run cleanly with zero errors.
+Setiap output AI telah melalui verifikasi teknis secara manual, bukan diterima mentah-mentah:
+- Semua komponen React menggunakan hook standar (`useState`, `useEffect`, `useReducer`, `useRef`) tanpa dependency tambahan di luar ketentuan `AGENTS.md`.
+- State hydration dan persistensi `localStorage` (termasuk skenario refresh di tengah pengerjaan) diverifikasi langsung di browser, bukan hanya dibaca dari kode.
+- Formula scoring, threshold capability level, dan pemetaan rekomendasi dicek ulang terhadap `PROJECT_REQUIREMENTS.md` agar implementasi tidak diam-diam menyimpang dari keputusan yang sudah disepakati.
+- Perilaku edge case (double-submit, akses `/assessment` setelah submit, akses `/result` sebelum submit, layout responsive di beberapa breakpoint) diuji ulang secara manual di browser setelah setiap perubahan, bukan diasumsikan benar dari kode saja.
+- Oxlint linting dan Vite production build dijalankan sampai bersih tanpa error setelah setiap perubahan signifikan.
