@@ -4,16 +4,16 @@ export default function OptionCard({ label, prefix, selected, onSelect }) {
       type="button"
       onClick={onSelect}
       aria-pressed={selected}
-      className={`group relative flex w-full items-center gap-3 rounded-xl border px-4 py-3.5 text-left text-sm transition-all focus-visible:border-primary ${
+      className={`group relative flex w-full items-center gap-3 rounded-xl border px-4 py-3.5 text-left text-sm transition-all focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/20 ${
         selected
-          ? "border-primary bg-primary-soft text-text shadow-sm"
-          : "border-border bg-surface text-text hover:border-primary/40 hover:bg-background"
+          ? "border-primary bg-primary-soft text-text shadow-[0_2px_12px_-4px_rgba(29,78,216,0.15)] ring-1 ring-primary/10"
+          : "border-border bg-surface text-text hover:border-primary/30 hover:bg-slate-50 hover:shadow-sm"
       }`}
     >
       <span
         className={`flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-md border text-xs font-semibold transition-colors ${
           selected
-            ? "border-primary bg-primary text-white"
+            ? "border-primary bg-primary text-white shadow-sm"
             : "border-border bg-background text-text-muted group-hover:border-primary/40 group-hover:text-primary"
         }`}
       >

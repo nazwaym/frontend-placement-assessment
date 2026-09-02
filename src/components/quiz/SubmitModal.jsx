@@ -48,8 +48,8 @@ export default function SubmitModal({
         {/* Informative message */}
         <p className="text-sm text-text-muted leading-relaxed">
           {allAnswered
-            ? "Semua 15 soal telah kamu jawab dengan lengkap. Setelah dikirim, jawaban tidak dapat diubah."
-            : `Masih ada ${unansweredCount} soal yang belum dijawab. Assessment hanya dapat dikirim setelah seluruh soal terisi.`}
+            ? "Semua soal sudah dijawab. Setelah assessment dikirim, jawaban tidak dapat diubah lagi."
+            : `Masih ada ${unansweredCount} soal yang belum dijawab. Silakan lengkapi semua soal terlebih dahulu sebelum mengirim assessment.`}
         </p>
 
         {/* Buttons */}

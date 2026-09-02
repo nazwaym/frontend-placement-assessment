@@ -1,6 +1,4 @@
-// TODO: isi dengan nomor WhatsApp resmi program (format internasional, tanpa +).
-// Belum ada di PRD/Blueprint — perlu dikonfirmasi sebelum go-live.
-const PROGRAM_WHATSAPP_NUMBER = "";
+const PROGRAM_WHATSAPP_NUMBER = "6285722326890";
 
 export function buildWhatsAppMessage({ name, score, level, program }) {
   return [

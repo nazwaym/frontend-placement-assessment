@@ -2,9 +2,9 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import CapabilitySummary from "../components/result/CapabilitySummary";
 import CategoryPerformance from "../components/result/CategoryPerformance";
-import StrengthImprovement from "../components/result/StrengthImprovement";
 import ResultInsight from "../components/result/ResultInsight";
 import RecommendationCard from "../components/result/RecommendationCard";
+import LearningPath from "../components/result/LearningPath";
 import ResultCTA from "../components/result/ResultCTA";
 import { useQuiz } from "../hooks/useQuiz";
 import { calculateScore, calculateCategoryPerformance, determineLevel } from "../lib/scoring";
@@ -66,8 +66,8 @@ export default function ResultPage() {
 
       {/* Content */}
       <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6 sm:py-10">
-        <div className="flex flex-col gap-6">
-          {/* 1. Capability Summary — Level + Score Arc */}
+        <div className="flex flex-col gap-6 sm:gap-8">
+          {/* 1. Capability Summary */}
           <CapabilitySummary
             percentage={percentage}
             level={level}
@@ -75,27 +75,25 @@ export default function ResultPage() {
             totalQuestions={totalQuestions}
           />
 
-          {/* 2. Category Performance — Progress bars */}
+          {/* 2. Category Performance */}
           <CategoryPerformance items={categoryPerformance} />
 
-          {/* 3. Strength & Improvement Areas */}
-          <StrengthImprovement categoryPerformance={categoryPerformance} />
-
-          {/* 4. Insight — Interpretive summary */}
+          {/* 3. Insight */}
           <ResultInsight
             level={level}
-            percentage={percentage}
             categoryPerformance={categoryPerformance}
           />
 
-          {/* 5. Program Recommendation */}
+          {/* 4. Recommendation */}
           <RecommendationCard
             program={recommendation.program}
-            focus={recommendation.focus}
             level={level}
           />
 
-          {/* 6. CTA — Next steps */}
+          {/* 5. Learning Path (Interactive Focus) */}
+          <LearningPath focus={recommendation.focus} />
+
+          {/* 6. CTA */}
           <ResultCTA whatsappUrl={whatsappUrl} onRestart={handleRestart} />
         </div>
       </div>

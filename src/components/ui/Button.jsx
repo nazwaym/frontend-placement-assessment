@@ -1,10 +1,10 @@
 const VARIANT_CLASSES = {
   primary:
-    "bg-primary text-white hover:bg-primary-hover disabled:opacity-50 disabled:cursor-not-allowed",
+    "bg-primary text-white hover:bg-primary-hover shadow-sm hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed",
   accent:
-    "bg-accent text-primary hover:bg-accent-hover disabled:opacity-50 disabled:cursor-not-allowed",
+    "bg-accent text-primary-hover hover:bg-accent-hover shadow-sm disabled:opacity-50 disabled:cursor-not-allowed",
   secondary:
-    "bg-transparent text-text border border-border hover:bg-surface disabled:opacity-50 disabled:cursor-not-allowed",
+    "bg-surface text-text border border-border shadow-sm hover:bg-slate-50 hover:border-slate-300 disabled:opacity-50 disabled:cursor-not-allowed",
 };
 
 export default function Button({

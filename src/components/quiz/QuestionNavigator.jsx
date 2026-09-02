@@ -22,7 +22,7 @@ export default function QuestionNavigator({
     let itemStyle =
       "border-border bg-surface text-text hover:border-primary/40 hover:bg-background";
     if (isCurrent) {
-      itemStyle = "border-primary bg-primary text-white font-semibold shadow-sm";
+      itemStyle = "border-primary bg-primary text-white font-semibold shadow-md ring-1 ring-accent/40";
     } else if (isAnswered) {
       itemStyle = "border-green-200 bg-green-50/70 text-green-900 font-medium";
     }
@@ -57,12 +57,16 @@ export default function QuestionNavigator({
           </span>
         </div>
 
-        {isAnswered && !isCurrent && (
-          <span className="text-[10px] font-semibold text-green-700">Dijawab</span>
-        )}
-        {isCurrent && (
-          <span className="text-[10px] font-semibold text-white/90">Aktif</span>
-        )}
+        <div className="flex flex-col items-end gap-0.5">
+          {isCurrent && (
+            <span className="text-[10px] font-semibold text-white/90">Aktif</span>
+          )}
+          {!isCurrent && (
+            <span className={`text-[10px] font-semibold ${isAnswered ? "text-green-700" : "text-text-muted"}`}>
+              {isAnswered ? "Sudah dijawab" : "Belum dijawab"}
+            </span>
+          )}
+        </div>
       </button>
     );
   };

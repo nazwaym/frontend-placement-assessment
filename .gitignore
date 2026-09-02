@@ -25,3 +25,5 @@ dist-ssr
 
 .claude
 
+# AI agent config — local only, not for version control
+AGENTS.md

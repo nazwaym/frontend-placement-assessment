@@ -54,10 +54,6 @@ export default function QuizPage() {
   }
 
   function handleNext() {
-    if (!isAnswered) {
-      setValidationError("Silakan pilih salah satu jawaban terlebih dahulu.");
-      return;
-    }
     setValidationError(null);
     goToQuestion(currentIndex + 1);
   }

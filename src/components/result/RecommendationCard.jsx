@@ -7,41 +7,28 @@ const RECOMMENDATION_RATIONALE = {
     "Kamu sudah menguasai dasar dengan baik. Program ini fokus pada skill lanjutan yang dibutuhkan di lingkungan kerja profesional — arsitektur komponen, state management, dan optimasi performa.",
 };
 
-export default function RecommendationCard({ program, focus, level }) {
+export default function RecommendationCard({ program, level }) {
   const rationale =
     RECOMMENDATION_RATIONALE[level] || RECOMMENDATION_RATIONALE.Beginner;
 
   return (
     <div
-      className="flex flex-col gap-5 rounded-2xl border border-border bg-surface p-6 sm:p-8 transition-shadow hover:shadow-md animate-fade-up"
+      className="relative flex flex-col gap-4 rounded-2xl border border-primary/20 bg-surface p-6 sm:p-8 shadow-[0_4px_24px_-8px_rgba(29,78,216,0.12)] animate-fade-up overflow-hidden"
       style={{ animationDelay: "0.35s" }}
     >
+      <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-primary to-accent opacity-90" />
       <div className="flex flex-col gap-1">
-        <span className="text-xs font-semibold tracking-wide text-text-muted uppercase">
+        <span className="text-[11px] font-bold tracking-widest text-primary uppercase">
           Program yang Direkomendasikan
         </span>
-        <h2 className="text-xl font-bold text-text sm:text-2xl">{program}</h2>
+        <h2 className="text-2xl font-display font-bold text-text sm:text-3xl mt-1">{program}</h2>
       </div>
 
-      <p className="text-sm leading-relaxed text-text-muted">{rationale}</p>
-
-      <div className="flex flex-col gap-2">
-        <span className="text-xs font-bold text-text uppercase tracking-wide">
-          Fokus Pembelajaran
-        </span>
-        <ul className="flex flex-wrap gap-2">
-          {focus.map((item) => (
-            <li
-              key={item}
-              className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-text transition-colors hover:border-primary/40 hover:text-primary"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-3.5 w-3.5 text-primary/60">
-                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clipRule="evenodd" />
-              </svg>
-              {item}
-            </li>
-          ))}
-        </ul>
+      <div className="mt-2 rounded-xl bg-background border border-border p-4 sm:p-5">
+        <p className="text-sm leading-relaxed text-text-muted">
+          <strong className="text-text font-semibold mr-1.5 block mb-1">Kenapa program ini cocok untukmu?</strong>
+          {rationale}
+        </p>
       </div>
     </div>
   );

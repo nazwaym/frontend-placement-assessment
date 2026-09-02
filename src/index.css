@@ -3,23 +3,23 @@
 /* Palette derived from Scholarstoday's biodata page (navy/gold/cream identity),
    with our own shades and roles — not a 1:1 copy of their hex values. */
 @theme {
-  --color-primary: #1e3a8a; /* Deep professional blue */
+  --color-primary: #1d4ed8; /* Rich professional blue */
   --color-primary-hover: #1e40af;
   --color-primary-soft: #eff6ff;
-  --color-accent: #eeb022;
-  --color-accent-hover: #d89a0f;
-  --color-accent-soft: #fef3c7;
-  --color-background: #f9fafb; /* Clean neutral background */
+  --color-accent: #eab308; /* Yellow accent */
+  --color-accent-hover: #ca8a04;
+  --color-accent-soft: #fef9c3;
+  --color-background: #f8fafc; /* Very light neutral/off-white */
   --color-surface: #ffffff; /* White surface */
-  --color-text: #111827; /* Dark text */
-  --color-text-muted: #6b7280; /* Gray muted text */
-  --color-border: #e5e7eb; /* Light border */
-  --color-success: #16a34a; /* Clean success green */
-  --color-warning: #d97706;
-  --color-error: #dc2626;
+  --color-text: #0f172a; /* Dark navy text */
+  --color-text-muted: #64748b; /* Slate gray muted */
+  --color-border: #e2e8f0; /* Soft slate border */
+  --color-success: #10b981; /* Clean success green */
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
 
   --font-sans: "Inter", system-ui, "Segoe UI", Roboto, sans-serif;
-  --font-display: "Fraunces", "Georgia", serif;
+  --font-display: "Outfit", "Inter", sans-serif;
 }
 
 @layer base {
