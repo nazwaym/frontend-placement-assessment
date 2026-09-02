@@ -1,4 +1,4 @@
-# AI Prompt Documentation — Frontend Placement Test Engine
+# AI Prompt Documentation - Frontend Placement Test Engine
 
 Dokumen ini berisi catatan prompt Artificial Intelligence (AI) yang digunakan selama proses analisa, perencanaan, implementasi, dan redesign aplikasi **Frontend Placement Test Engine**, sesuai dengan ketentuan penugasan seleksi.
 
