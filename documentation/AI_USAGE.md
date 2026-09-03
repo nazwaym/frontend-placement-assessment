@@ -39,7 +39,7 @@ AI digunakan untuk membantu mengembangkan konsep yang sudah ada menjadi product 
 
 **Hasil**
 Konsep awal tersebut kemudian dikembangkan menjadi assessment dengan alur:
-`Biodata → Persiapan Assessment → Pengerjaan Soal → Hasil Assessment → Insight → Rekomendasi Program`
+`Biodata, Persiapan Assessment, Pengerjaan Soal, Hasil Assessment, Insight, dan Rekomendasi Program`
 
 ### 2. Requirement Analysis
 **Prompt yang Digunakan**
@@ -67,7 +67,7 @@ Requirement kemudian dikelompokkan menjadi beberapa bagian:
 
 **Hasil**
 Dari proses tersebut, assessment diarahkan agar hasil akhirnya memiliki alur:
-`Result → Meaning → Evidence → Recommendation → Next Action`
+`Result, Meaning, Evidence, Recommendation, dan Next Action`
 Artinya peserta tidak hanya mengetahui nilainya, tetapi juga memahami kemampuan yang terlihat dari hasil assessment dan mengetahui langkah berikutnya.
 
 ### 4. Assessment Blueprint
@@ -78,7 +78,7 @@ Blueprint sudah dibuat dalam file `Question_Rules_Assessment_Blueprint`. AI digu
 > Aku sudah membuat blueprint assessment dalam file Question_Rules_Assessment_Blueprint. Bantu aku melakukan review terhadap struktur yang sudah dibuat, terutama hubungan antara kategori, competency, difficulty, bobot, dan tujuan pengukuran. Pastikan struktur tersebut konsisten dengan tujuan Frontend Placement Test dan jangan mengubah blueprint tanpa alasan yang jelas.
 
 **Hasil**
-Blueprint yang direview digunakan sebagai dasar penyusunan 15 soal dan menjadi penghubung antara `question → competency → scoring → recommendation`.
+Blueprint yang direview digunakan sebagai dasar penyusunan 15 soal dan menjadi penghubung antara `question, competency, scoring, dan recommendation`.
 
 ### 5. Question Mapping & Validation
 **Tujuan**
@@ -95,11 +95,10 @@ Setiap pertanyaan memiliki mapping yang divalidasi dengan jelas sehingga hasil a
 > Untuk scoring, aku ingin tingkat kesulitan soal ikut memengaruhi nilai. Gunakan Easy = 1, Medium = 2, dan Hard = 3. Bantu aku menentukan cara menghitung score, maximum score, persentase, capability level, dan performa kategori berdasarkan struktur assessment yang sudah dibuat.
 
 **Hasil**
-Sistem menggunakan weighted scoring:
-- Easy = 1 
-- Medium = 2 
-- Hard = 3
-Persentase dihitung berdasarkan score yang diperoleh dibandingkan dengan maximum score berbobot.
+AI membantu mengeksplorasi pendekatan weighted scoring berdasarkan tingkat kesulitan soal (Easy = 1, Medium = 2, Hard = 3) sebagai salah satu alternatif kalkulasi score.
+
+**Catatan Iterasi**
+Pada tahap awal, terdapat eksplorasi penggunaan weighted scoring berdasarkan tingkat kesulitan soal (Easy = 1, Medium = 2, Hard = 3). Setelah dilakukan evaluasi dan penyesuaian terhadap implementasi final, pendekatan tersebut tidak digunakan. Scoring final menggunakan flat scoring, yaitu setiap jawaban benar bernilai 1 poin dan jawaban salah bernilai 0 poin. Difficulty tetap disimpan sebagai metadata soal dan tidak digunakan dalam kalkulasi score. Keputusan ini tercermin pada implementasi di `src/lib/scoring.js` dan Rule 17 pada `AGENTS.md`.
 
 ### 7. Project Requirements
 **Tujuan**
@@ -155,7 +154,7 @@ Setelah ditinjau kembali dari sisi user experience, keputusan "User tidak boleh 
 ### 10. Result & Recommendation UX
 
 **Tujuan**
-Memastikan halaman hasil tidak hanya menampilkan angka, tapi memiliki hierarki informasi yang jelas: hasil → performa kategori → insight → rekomendasi → next action, mengikuti prinsip "Result → Meaning → Evidence → Recommendation → Next Action" yang sudah ditentukan pada tahap Product Thinking (bagian 3).
+Memastikan halaman hasil tidak hanya menampilkan angka, tapi memiliki hierarki informasi yang jelas: hasil, performa kategori, insight, rekomendasi, dan next action, mengikuti prinsip "Result, Meaning, Evidence, Recommendation, dan Next Action" yang sudah ditentukan pada tahap Product Thinking (bagian 3).
 
 **Prompt yang Digunakan**
 > Aku mau redesign halaman hasil assessment yang sekarang agar terasa seperti hasil yang personal dan profesional:
@@ -167,7 +166,7 @@ Memastikan halaman hasil tidak hanya menampilkan angka, tapi memiliki hierarki i
 > - WhatsApp CTA otomatis dengan format pesan nama, skor, level, dan program yang diminati.
 
 **Hasil / Keputusan**
-- Halaman `/result` disusun sebagai rangkaian komponen yang mengikuti hierarki tersebut secara berurutan: `CapabilitySummary` (skor & level) → `CategoryPerformance` (breakdown per kategori dengan bar indicator) → `ResultInsight` (kekuatan/area yang perlu ditingkatkan) → `RecommendationCard` (program + alasan) → `LearningPath` (fokus belajar) → `ResultCTA` (WhatsApp).
+- Halaman `/result` disusun sebagai rangkaian komponen yang mengikuti hierarki tersebut secara berurutan: `CapabilitySummary` (skor & level), `CategoryPerformance` (breakdown per kategori dengan bar indicator), `ResultInsight` (kekuatan/area yang perlu ditingkatkan), `RecommendationCard` (program + alasan), `LearningPath` (fokus belajar), dan `ResultCTA` (WhatsApp).
 - Threshold Capability Level (0–40 Beginner, 41–75 Intermediate, 76–100 Advanced) dan pemetaan rekomendasi tetap mengacu ke `PROJECT_REQUIREMENTS.md` §18 dan §20 — redesign ini murni pada sisi presentasi, bukan mengubah logic penentuan level atau rekomendasi.
 
 **Catatan Iterasi**
@@ -203,7 +202,7 @@ Memastikan titik-titik rawan pada flow assessment (soal belum lengkap, submit ga
 **Sebelum masuk ke tahap implementasi UI**, arah desain ditentukan berdasarkan kebutuhan produk sebagai Frontend Placement Test, dengan mempertimbangkan karakteristik produk assessment/EdTech.
 Referensi visual digunakan untuk membantu menentukan mood, warna, dan feel yang ingin dicapai. Salah satu referensi yang digunakan adalah Scholarstoday, terutama sebagai inspirasi visual, tetapi desain akhir dikembangkan dengan identitas dan kebutuhan project sendiri.
 
-**Prompt yang Digunakan — Menentukan Arah Desain**
+**Prompt yang Digunakan : Menentukan Arah Desain**
 > Aku ingin membuat UI/UX untuk Frontend Placement Test yang terasa seperti produk assessment/EdTech modern. Aku ingin menggunakan Scholarstoday sebagai salah satu referensi visual, terutama dari sisi color palette dan feel, tetapi tidak ingin menyalin desainnya secara langsung. Aku ingin desainnya tetap punya identitas sendiri, lebih interaktif, responsive, dan tidak terlihat seperti template AI. Tolong bantu kembangkan konsep desain berdasarkan arahan tersebut.
 
 **Hasil**
@@ -220,7 +219,7 @@ Beberapa hal yang menjadi perhatian:
 - Responsive layout untuk desktop, tablet, dan mobile.
 - Penggunaan visual element dan micro-interaction secara seperlunya.
 
-**Prompt yang Digunakan — Landing Page**
+**Prompt yang Digunakan : Landing Page**
 > Aku ingin redesign halaman awal Frontend Placement Test. Gunakan arahan desain yang sudah ditentukan sebelumnya sebagai acuan. Halaman awal jangan hanya menampilkan judul dan deskripsi, tetapi berikan introduction yang lebih menarik dan membantu user memahami assessment sebelum memulai. Buat layout yang responsive untuk desktop, tablet, dan mobile serta tambahkan elemen interaktif yang tetap sesuai dengan karakter produk.
 
 **Hasil**
@@ -238,7 +237,7 @@ Struktur workspace yang digunakan meliputi:
 - Navigation antar-soal.
 - Responsive behavior untuk perangkat mobile.
 
-**Prompt yang Digunakan — Assessment Workspace**
+**Prompt yang Digunakan: Assessment Workspace**
 > Saya ingin melakukan redesign halaman assessment Frontend Placement Test yang sudah ada. Jangan mengubah logic utama aplikasi seperti data soal, scoring, jawaban user, navigasi soal, routing, timer, dan assessment state. Fokus utama pekerjaan adalah memperbaiki UI/UX agar workspace assessment lebih nyaman digunakan dan terasa seperti produk assessment yang profesional. Perhatikan hierarchy informasi, question navigator, question card, answer options, progress, timer, dan responsive behavior pada mobile.
 
 **Hasil**
@@ -247,7 +246,7 @@ AI membantu menerjemahkan kebutuhan tersebut ke dalam struktur komponen React da
 #### 12.4 Iterasi Desain Berdasarkan Hasil Tampilan
 Setelah implementasi awal selesai, hasil tampilan diperiksa kembali melalui browser. Evaluasi dilakukan berdasarkan tampilan aktual, terutama pada hierarchy, spacing, responsiveness, dan pengalaman interaksi.
 
-**Prompt yang Digunakan — Iterasi Desain**
+**Prompt yang Digunakan :  Iterasi Desain**
 > Aku sudah melihat hasil desain yang dibuat dan ingin melakukan beberapa refinement supaya tampilannya lebih memiliki karakter yang sesuai dengan konsep Frontend Placement Test. Tolong evaluasi kembali hierarchy, spacing, interaksi, dan elemen visualnya.
 > 
 > Aku ingin desainnya terasa lebih natural, engaging, dan tidak terlalu generik. Jika memang sesuai dengan konteks halaman, tambahkan animasi dan micro-interaction yang membantu user memahami alur dan membuat pengalaman assessment lebih menarik, terutama pada bagian introduction dan elemen yang dapat berinteraksi.
@@ -265,7 +264,7 @@ Animasi tidak ditambahkan hanya sebagai dekorasi, tetapi dipertimbangkan berdasa
 
 #### 12.5 Result Page & Recommendation UX
 Pada halaman hasil, desain diarahkan agar hasil assessment tidak berhenti pada angka atau score. Informasi disusun berdasarkan alur:
-`Result → Meaning → Evidence → Recommendation → Next Action`
+`Result, Meaning, Evidence, Recommendation, dan Next Action`
 
 Struktur utama hasil meliputi:
 - Capability Level dan score.
@@ -278,7 +277,7 @@ Struktur utama hasil meliputi:
 
 Pada tahap refinement, bagian “Kekuatan Kamu” dan “Yang Perlu Ditingkatkan” tidak dipertahankan sebagai section terpisah karena informasi tersebut sudah tercakup dalam category performance dan insight. Hal ini dilakukan untuk mengurangi pengulangan informasi pada halaman hasil.
 
-**Prompt yang Digunakan — Result & Recommendation**
+**Prompt yang Digunakan : Result & Recommendation**
 > Aku mau redesign halaman hasil assessment yang sekarang agar terasa seperti hasil yang personal dan profesional. Hasil jangan hanya menampilkan score, tetapi bantu user memahami capability level, performa setiap kategori, insight dari hasil assessment, serta rekomendasi program yang sesuai. Buat recommendation area lebih personal dan actionable, misalnya dengan focus learning, learning path, dan langkah selanjutnya. Perhatikan hierarchy informasi dan jangan membuat section yang informasinya terlalu berulang.
 
 **Hasil**
@@ -296,7 +295,7 @@ AI digunakan terutama untuk:
 - Membantu menemukan kemungkinan masalah pada hierarchy, spacing, dan usability.
 
 Dengan demikian, proses UI/UX bersifat iteratif, yaitu:
-`Product Need → Design Direction → Initial Implementation → Browser Review → Refinement → Final UI/UX`
+`Product Need, Design Direction, Initial Implementation, Browser Review, Refinement, dan Final UI/UX`
 
 Keputusan akhir tetap disesuaikan dengan kebutuhan dan karakteristik Frontend Placement Test, bukan semata-mata mengikuti output AI.
 

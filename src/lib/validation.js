@@ -1,7 +1,4 @@
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const WHATSAPP_PATTERN = /^(\+?\d{9,15})$/;
-
-export function validateBiodata({ name, email, whatsapp, domicile }) {
+export function validateBiodata({ name, email, whatsapp, targetProgram }) {
   const errors = {};
 
   if (!name?.trim()) {
@@ -10,18 +7,20 @@ export function validateBiodata({ name, email, whatsapp, domicile }) {
 
   if (!email?.trim()) {
     errors.email = "Email tidak boleh kosong.";
-  } else if (!EMAIL_PATTERN.test(email.trim())) {
-    errors.email = "Masukkan email yang valid.";
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    errors.email = "Format email tidak valid.";
   }
 
   if (!whatsapp?.trim()) {
     errors.whatsapp = "Nomor WhatsApp tidak boleh kosong.";
-  } else if (!WHATSAPP_PATTERN.test(whatsapp.trim().replace(/[\s-]/g, ""))) {
-    errors.whatsapp = "Masukkan nomor WhatsApp yang valid.";
+  } else if (!/^[0-9+\-\s()]+$/.test(whatsapp)) {
+    errors.whatsapp = "Format nomor WhatsApp tidak valid.";
+  } else if (whatsapp.replace(/\D/g, "").length < 9) {
+    errors.whatsapp = "Nomor WhatsApp terlalu pendek.";
   }
 
-  if (!domicile?.trim()) {
-    errors.domicile = "Domisili tidak boleh kosong.";
+  if (!targetProgram?.trim()) {
+    errors.targetProgram = "Target Program harus dipilih.";
   }
 
   return errors;

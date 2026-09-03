@@ -10,6 +10,7 @@ import { useQuiz } from "../hooks/useQuiz";
 import { calculateScore, calculateCategoryPerformance, determineLevel } from "../lib/scoring";
 import { getRecommendation } from "../lib/recommendation";
 import { buildWhatsAppMessage, buildWhatsAppUrl } from "../lib/whatsapp";
+import BrandLogo from "../components/ui/BrandLogo";
 
 export default function ResultPage() {
   const navigate = useNavigate();
@@ -45,11 +46,14 @@ export default function ResultPage() {
   const firstName = biodata.name.trim().split(" ")[0];
 
   return (
-    <main
-      className="min-h-screen bg-background"
-      style={{ backgroundImage: "none" }}
-    >
-      {/* Header Banner */}
+    <div className="min-h-screen flex flex-col bg-background">
+      <header className="w-full border-b border-border/50 bg-background/95 backdrop-blur-md">
+        <div className="mx-auto flex max-w-3xl items-center gap-4 px-4 py-4 sm:px-6">
+          <BrandLogo showSubtitle={true} />
+        </div>
+      </header>
+      <main className="flex-1">
+        {/* Header Banner */}
       <div className="border-b border-border bg-surface">
         <div className="mx-auto max-w-3xl px-4 py-8 text-center sm:px-6 sm:py-10">
           <span className="inline-block rounded-lg bg-primary-soft px-3 py-1 text-xs font-bold tracking-wide text-primary uppercase mb-3">
@@ -97,6 +101,7 @@ export default function ResultPage() {
           <ResultCTA whatsappUrl={whatsappUrl} onRestart={handleRestart} />
         </div>
       </div>
-    </main>
+      </main>
+    </div>
   );
 }

@@ -9,9 +9,9 @@ const categoryLabels = {
 };
 
 const difficultyColors = {
-  "easy": "bg-green-100 text-green-800 border-green-200",
-  "medium": "bg-yellow-100 text-yellow-800 border-yellow-200",
-  "hard": "bg-red-100 text-red-800 border-red-200"
+  "easy": "bg-background border-border text-text-muted",
+  "medium": "bg-background border-border text-text-muted",
+  "hard": "bg-background border-border text-text-muted"
 };
 
 const renderQuestionText = (text) => {
@@ -55,7 +55,7 @@ export default function QuestionCard({ question, selectedAnswer, onSelectAnswer,
   const ALPHABET = ["A", "B", "C", "D", "E", "F"];
 
   return (
-    <div className="relative flex w-full flex-col gap-6 rounded-2xl bg-surface p-6 shadow-[0_4px_24px_-8px_rgba(0,0,0,0.06)] border border-border sm:p-8 animate-fade-up overflow-hidden">
+    <div className="relative flex w-full flex-col gap-6 rounded-3xl bg-surface p-6 shadow-sm border border-border sm:p-8 animate-fade-up overflow-hidden">
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary to-accent opacity-90" />
       <div className="flex flex-wrap items-center gap-2 mb-2">
         <span className="inline-flex items-center rounded-md bg-primary-soft px-2.5 py-1 text-xs font-semibold text-primary border border-primary/20">

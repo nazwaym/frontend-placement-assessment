@@ -22,9 +22,9 @@ export default function QuestionNavigator({
     let itemStyle =
       "border-border bg-surface text-text hover:border-primary/40 hover:bg-background";
     if (isCurrent) {
-      itemStyle = "border-primary bg-primary text-white font-semibold shadow-md ring-1 ring-accent/40";
+      itemStyle = "border-primary bg-primary text-white font-semibold shadow-sm";
     } else if (isAnswered) {
-      itemStyle = "border-green-200 bg-green-50/70 text-green-900 font-medium";
+      itemStyle = "border-primary/20 bg-primary-soft text-primary font-medium";
     }
 
     return (
@@ -40,13 +40,12 @@ export default function QuestionNavigator({
         className={`group flex items-center justify-between rounded-xl border px-3 py-2.5 text-xs transition-all ${itemStyle}`}
       >
         <div className="flex items-center gap-2">
-          {/* Status Icon Indicator */}
           <span
             className={`flex h-5 w-5 items-center justify-center rounded-full text-[11px] font-bold ${
               isCurrent
                 ? "bg-white/20 text-white"
                 : isAnswered
-                  ? "bg-green-600 text-white"
+                  ? "bg-primary text-white"
                   : "bg-border text-text-muted"
             }`}
           >
@@ -62,7 +61,7 @@ export default function QuestionNavigator({
             <span className="text-[10px] font-semibold text-white/90">Aktif</span>
           )}
           {!isCurrent && (
-            <span className={`text-[10px] font-semibold ${isAnswered ? "text-green-700" : "text-text-muted"}`}>
+            <span className={`text-[10px] font-semibold ${isAnswered ? "text-primary" : "text-text-muted"}`}>
               {isAnswered ? "Sudah dijawab" : "Belum dijawab"}
             </span>
           )}
@@ -84,8 +83,8 @@ export default function QuestionNavigator({
 
         {/* Mini Status Breakdown */}
         <div className="grid grid-cols-2 gap-2 rounded-xl bg-background p-2.5 text-xs border border-border">
-          <div className="flex items-center gap-1.5 text-green-700 font-medium">
-            <span className="h-2 w-2 rounded-full bg-green-600" />
+          <div className="flex items-center gap-1.5 text-primary font-medium">
+            <span className="h-2 w-2 rounded-full bg-primary" />
             <span>{answeredCount} Dijawab</span>
           </div>
           <div className="flex items-center gap-1.5 text-text-muted font-medium">
@@ -107,7 +106,7 @@ export default function QuestionNavigator({
       {/* Desktop Sidebar (Left Column) */}
       <aside
         aria-label="Navigasi Soal Desktop"
-        className="hidden md:block w-64 shrink-0 rounded-2xl border border-border bg-surface p-4 shadow-sm"
+        className="hidden md:block w-64 shrink-0 rounded-3xl border border-border bg-surface p-5 shadow-sm"
       >
         {navContent}
       </aside>

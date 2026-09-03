@@ -31,17 +31,17 @@ Aplikasi ini memberikan pengalaman evaluasi teknis yang profesional, tenang, dan
 * **Code Block Syntax Formatting**: Soal yang mengandung potongan kode (JavaScript/HTML/CSS) disajikan dalam container *dark-themed code block* ber-font monospace dengan dukungan *horizontal scrolling*.
 
 ### 🔒 Validation & Strict Assessment Rules
-* **Per-Question Answer Validation**: Mencegah perpindahan soal jika jawaban belum dipilih, dilengkapi umpan balik *inline banner* yang tenang tanpa *browser alert*.
-* **Complete Submission Safeguard**: Submission final mewajibkan seluruh 15 soal terisi. Jika ada soal kosong, modal review akan mengarahkan user langsung ke soal yang belum dijawab (*Jump to Unanswered*).
+* **Free Navigation Between Questions**: User dapat berpindah soal kapan saja tanpa harus menjawab terlebih dahulu. Kelengkapan jawaban diverifikasi pada tahap review sebelum submission final.
+* **Complete Submission Safeguard**: Submission final dilengkapi modal review yang menampilkan jumlah soal terjawab. Jika masih ada soal kosong, user diarahkan langsung ke soal yang belum dijawab (*Jump to Unanswered*).
 * **Automatic Timeout Handling**: Apabila waktu pengerjaan (20 menit) habis, sistem secara otomatis melakukan submission berbasis jawaban yang berhasil diisi tanpa memblokir user.
 * **Double-Submit Prevention**: Proteksi state untuk menjamin proses scoring dan pengiriman data hanya dieksekusi tepat satu kali.
 
 ### 📊 Comprehensive Result & Recommendation Engine
 * **Animated Score Arc**: Visualisasi persentase skor akhir dengan SVG radial progress ring dan animasi *count-up*.
 * **Capability Leveling**:
-  * **Beginner** (0 – 40%) → Program *Frontend Fundamental*
-  * **Intermediate** (41 – 75%) → Program *Frontend Development*
-  * **Advanced** (76 – 100%) → Program *Advanced Frontend Development*
+  * **Beginner** (0 – 40%) - Direkomendasikan untuk Program *Frontend Fundamental*
+  * **Intermediate** (41 – 75%) - Direkomendasikan untuk Program *Frontend Development*
+  * **Advanced** (76 – 100%) - Direkomendasikan untuk Program *Advanced Frontend Development*
 * **Strength & Improvement Analysis**: Mengidentifikasi kategori terkuat (≥67%) dan kategori yang perlu ditingkatkan (<67%) secara dinamis dari hasil pengerjaan.
 * **Personalized Insight & Rationale**: Penjelasan naratif mengenai makna skor akhir dan alasan pemilihan program rekomendasi.
 * **WhatsApp CTA Integration**: Membuka aplikasi WhatsApp dengan pesan otomatis berisi nama, skor, level, dan program yang diminati.

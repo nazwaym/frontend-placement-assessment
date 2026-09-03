@@ -2,9 +2,9 @@ const RECOMMENDATION_RATIONALE = {
   Beginner:
     "Berdasarkan hasil assessment, kamu disarankan untuk memperkuat fundamental frontend terlebih dahulu. Program ini dirancang untuk membangun dasar yang kuat sebelum melangkah ke materi yang lebih kompleks.",
   Intermediate:
-    "Hasil assessment menunjukkan bahwa kamu sudah memiliki dasar yang baik. Program ini akan membantumu mengembangkan skill ke tahap implementasi nyata — membangun UI yang responsif dan memahami arsitektur frontend modern.",
+    "Hasil assessment menunjukkan bahwa kamu sudah memiliki dasar yang baik. Program ini akan membantumu mengembangkan skill ke tahap implementasi nyata membangun UI yang responsif dan memahami arsitektur frontend modern.",
   Advanced:
-    "Kamu sudah menguasai dasar dengan baik. Program ini fokus pada skill lanjutan yang dibutuhkan di lingkungan kerja profesional — arsitektur komponen, state management, dan optimasi performa.",
+    "Kamu sudah menguasai dasar dengan baik. Program ini fokus pada skill lanjutan yang dibutuhkan di lingkungan kerja profesional  arsitektur komponen, state management, dan optimasi performa.",
 };
 
 export default function RecommendationCard({ program, level }) {

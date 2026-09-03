@@ -489,11 +489,11 @@ Animation dan interaction harus digunakan untuk memberikan feedback.
 
 Contoh:
 
-* option hover → clickable feedback,
-* selected option → selection feedback,
-* question transition → orientation,
-* progress → position awareness,
-* result reveal → completion feedback.
+* option hover memberikan clickable feedback,
+* selected option memberikan selection feedback,
+* question transition memberikan orientation,
+* progress memberikan position awareness,
+* result reveal memberikan completion feedback.
 
 Tidak boleh menambahkan animasi hanya untuk dekorasi.
 

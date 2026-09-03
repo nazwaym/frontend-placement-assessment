@@ -25,5 +25,7 @@ dist-ssr
 
 .claude
 
+docs_backup
+
 # AI agent config — local only, not for version control
 AGENTS.md

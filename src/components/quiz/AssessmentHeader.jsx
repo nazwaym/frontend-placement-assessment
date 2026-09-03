@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import ProgressBar from "../ui/ProgressBar";
+import BrandLogo from "../ui/BrandLogo";
 
 export default function AssessmentHeader({
   currentIndex,
@@ -36,19 +37,11 @@ export default function AssessmentHeader({
   const isWarning = secondsLeft < 180; // Warning under 3 minutes
 
   return (
-    <header className="sticky top-0 z-30 border-b border-border bg-surface/95 backdrop-blur-sm">
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
+    <header className="sticky top-0 z-30 border-b border-border/50 bg-background/95 backdrop-blur-md">
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6">
         {/* Left: Branding & Assessment Title */}
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2">
-            <span className="font-display text-xl font-bold tracking-tight text-primary">
-              Scholar<span className="text-accent">.</span>
-            </span>
-            <span className="hidden h-4 w-px bg-border sm:inline-block" />
-            <span className="hidden text-sm font-semibold text-text sm:inline-block">
-              Frontend Placement Test
-            </span>
-          </div>
+          <BrandLogo showSubtitle={true} />
         </div>
 
         {/* Center: Progress (Desktop) / Mobile Question Sheet Trigger */}
@@ -93,10 +86,10 @@ export default function AssessmentHeader({
         {/* Right: Timer & Autosave Status */}
         <div className="flex items-center gap-3">
           <div
-            className={`flex items-center gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs font-mono font-medium transition-colors ${
+            className={`flex items-center gap-2 rounded-xl border px-3 py-2 text-sm font-semibold shadow-sm transition-colors ${
               isWarning
                 ? "border-warning/30 bg-amber-50 text-warning"
-                : "border-border bg-background text-text-muted"
+                : "border-border bg-surface text-text"
             }`}
             title="Sisa Waktu Pengerjaan"
             aria-label={`Sisa waktu: ${formattedTime}`}
