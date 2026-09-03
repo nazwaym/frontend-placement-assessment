@@ -27,7 +27,7 @@ const renderQuestionText = (text) => {
     if (codeLines.length > 0) {
       elements.push(
         <div key={`code-${elements.length}`} className="my-4 overflow-x-auto rounded-xl bg-gray-900 p-5 shadow-inner">
-          <pre className="font-mono text-[13px] leading-relaxed text-gray-100">
+          <pre className="font-mono text-[13px] leading-relaxed text-gray-100 whitespace-pre-wrap break-words">
             <code>{codeLines.join('\n')}</code>
           </pre>
         </div>
